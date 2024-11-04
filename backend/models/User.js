@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema({
     },
     resume_link: {
         type: String,
+        default:"null"
     },
     CGPA: {
         type: String,

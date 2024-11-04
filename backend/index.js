@@ -7,7 +7,7 @@ import AuthRoutes from './routes/Auth.js'
 // import UserRoutes from './routes/user.js'
 import DashboardRoutes from './routes/DashBoard.js'
 // import CommentRoutes from './routes/Comments.js'
-// import PublicRoutes from './routes/Public.js'
+import PublicRoutes from './routes/public.js'
 
 dotenv.config()
 
@@ -30,7 +30,7 @@ app.use('/auth', AuthRoutes)
 // app.use('/user', UserRoutes)
 app.use('/dashboard', DashboardRoutes)
 // app.use('/comment', CommentRoutes)
-// app.use('/public', PublicRoutes)
+app.use('/public', PublicRoutes)
 
 app.listen(PORT, () => {
     console.log(`App is running on Port ${PORT}`)
