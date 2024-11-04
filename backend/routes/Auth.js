@@ -1,7 +1,7 @@
 import express from 'express'
 import { Login, Logout, Register, updateProfile } from '../controllers/Auth.js'
 import { upload } from '../middleware/Multer.js'
-import { isLogin } from '../middleware/CheckAdmin.js'
+import { isLogin } from '../middleware/checkAdmin.js'
 
 const AuthRoutes = express.Router()
 
