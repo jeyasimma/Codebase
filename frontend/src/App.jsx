@@ -1,21 +1,21 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Pages/Home";
-import Blog from "./Pages/Blog";
+import Home from "./pages/Home";
+import Blog from "./pages/Blog";
 
 import UserLayout from "./Layout/UserLayout";
-import Admin from "./Pages/Admin/Admin";
+import Admin from "./pages/Admin/Admin";
 import Adminlayout from "./Layout/Adminlayout";
-import AddPost from "./Pages/Admin/AddPost";
-import User from "./Pages/Admin/User";
-import AllPost from "./Pages/AllPost";
-import Login from "./Pages/Login";
-import Register from "./Pages/Register";
+import AddPost from "./pages/Admin/AddPost";
+import User from "./pages/Admin/user";
+import AllPost from "./pages/AllPost";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import { Provider } from "react-redux";
 import { peristor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Toaster } from "react-hot-toast";
-import Profile from "./Pages/Profile";
+import Profile from "./pages/Profile";
 export default function App() {
   return (
     <>
