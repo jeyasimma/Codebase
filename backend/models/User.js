@@ -17,13 +17,16 @@ const UserSchema = new mongoose.Schema({
         enum: ['admin', 'user'],
         default: 'user'
     },
+    dept:{
+        type:String,
+    },
     year: {
         type: String,
     },
     gender: {
         type: String,
     },
-    status: {
+    Status: {
         type: String,
     },
     resume_link: {
@@ -35,6 +38,12 @@ const UserSchema = new mongoose.Schema({
     },
     primary_lang: {
         type: String,
+    },
+    phone:{
+        type: Number ,
+    },
+    whatsapp:{
+        type: Number ,
     },
     skills: [{
         type: String,
