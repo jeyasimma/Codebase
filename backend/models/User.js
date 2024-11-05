@@ -20,6 +20,12 @@ const UserSchema = new mongoose.Schema({
     year: {
         type: String,
     },
+    gender: {
+        type: String,
+    },
+    status: {
+        type: String,
+    },
     resume_link: {
         type: String,
         default:"null"
