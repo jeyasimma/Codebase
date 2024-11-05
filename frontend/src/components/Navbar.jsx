@@ -61,7 +61,7 @@ export default function Navbar() {
                 ""
               )}
               <li>
-                <Link className="dropdown-item" to={`/profile/${user._id}`}>
+                <Link className="dropdown-item" to={`/user/${user._id}`}>
                   Profile
                 </Link>
               </li>
