@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt'
 
 const Register = async (req, res) => {
     try {
-        const { FullName, email, password } = req.body
+        const { FullName, email, password, gender, dept, skills, role, year, status, resume_link, CGPA, primary_lang, phone, whatsapp} = req.body
         // Upload the image to Cloudinary
         const imagePath = req.file.filename;
         // const cloudinaryResult = await FileUploadeToColoudinary(imagePath, 'user_profiles');
@@ -24,6 +24,17 @@ const Register = async (req, res) => {
             email: email,
             password: hasePassword,
             profile: imagePath,
+            gender: gender,
+            dept: dept,
+            skills:skills,
+            role:  role,
+            year: year,
+            status: status,
+            resume_link: resume_link,
+            CGPA: CGPA,
+            primary_lang: primary_lang,
+            phone: phone,
+            whatsapp: whatsapp
         });
 
         // Save the user to the database
