@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-// import Blog from "./pages/Blog";
+import user from "./pages/user";
 import UserLayout from "./Layout/UserLayout";
 // import Admin from "./pages/Admin/Admin";
 // import Adminlayout from "./Layout/Adminlayout";
@@ -27,7 +27,7 @@ export default function App() {
 
               <Route path="/" element={<UserLayout />}>
                 <Route index element={<Home />} />
-                {/* <Route path="blog/:postId" element={<Blog />}></Route> */}
+                <Route path="/user/:id" element={<user />}></Route>
                 {/* <Route path="blog/:postId" element={<User1 />}></Route> */}
                 {/* <Route path="/profile/:userId" element={<Profile />}></Route> */}
               </Route>

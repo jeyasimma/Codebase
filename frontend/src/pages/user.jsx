@@ -4,62 +4,62 @@ import { BaseUrl, get, post } from "../services/Endpoint";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
-export default function Blog() {
-  const { postId } = useParams(); // Assuming you're passing the post ID in the route
+export default function User() {
+  const { userId } = useParams(); // Assuming you're passing the post ID in the route
   const user = useSelector((state) => state.auth.user);
 
-  const [singlePost, setSinglePost] = useState(null);
-  const [comment, setComment] = useState("");
-  const [loaddata, setLoaddata] = useState(false);
+  const [singleUser, setsingleUser] = useState(null);
+  // const [comment, setComment] = useState("");
+  // const [loaddata, setLoaddata] = useState(false);
 
   useEffect(() => {
-    const fetchSinglePost = async () => {
+    const fetchsingleUser = async () => {
       try {
-        const request = await get(`/public/Singlepost/${postId}`);
+        const request = await get(`/public/Singleuser/${userId}`);
         const response = request.data;
-        setSinglePost(response.Post);
+        setsingleUser(response.Post);
         console.log(response);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchSinglePost();
-  }, [loaddata, postId]); // Added postId as dependency
+    fetchsingleUser();
+  }, [loaddata, userId]); // Added userId as dependency
 
-  const onSubmitComment = async (e) => {
-    e.preventDefault();
-    if (!user) {
-      toast.error("please Login");
-    } else {
-      try {
-        const request = await post("/comment/addcomment", {
-          comment,
-          postId,
-          userId: user._id,
-        });
-        const response = request.data;
-        console.log(response);
-        setLoaddata((prevState) => !prevState); // Toggle loaddata
-        if (response.success) {
-          // alert(response.message);
-          toast.success(response.message);
-          setComment("");
-        }
-      } catch (error) {
-        console.log(error);
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          // setError(error.response.data.message); // Set error message from server response
-          toast.error(error.response.data.message);
-        } else {
-          toast.error("An unexpected error occurred. Please try again.");
-        }
-      }
-    }
-  };
+  // const onSubmitComment = async (e) => {
+  //   e.preventDefault();
+  //   if (!user) {
+  //     toast.error("please Login");
+  //   } else {
+  //     try {
+  //       const request = await post("/comment/addcomment", {
+  //         comment,
+  //         userId,
+  //         userId: user._id,
+  //       });
+  //       const response = request.data;
+  //       console.log(response);
+  //       setLoaddata((prevState) => !prevState); // Toggle loaddata
+  //       if (response.success) {
+  //         // alert(response.message);
+  //         toast.success(response.message);
+  //         setComment("");
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //       if (
+  //         error.response &&
+  //         error.response.data &&
+  //         error.response.data.message
+  //       ) {
+  //         // setError(error.response.data.message); // Set error message from server response
+  //         toast.error(error.response.data.message);
+  //       } else {
+  //         toast.error("An unexpected error occurred. Please try again.");
+  //       }
+  //     }
+  //   }
+  // };
 
   return (
     <div className="container text-white mt-5 mb-5">
@@ -69,7 +69,7 @@ export default function Blog() {
             {post && post.title}
           </h1>
           <img
-            src={singlePost && `${BaseUrl}/images/${singlePost.image}`}
+            src={singleUser && `${BaseUrl}/images/${singleUser.image}`}
             alt="Exploring the Art of Writing"
             className="img-fluid mb-4"
             style={{
@@ -80,7 +80,7 @@ export default function Blog() {
             }}
           />
 
-          <p className="mb-5">{singlePost && singlePost.desc}</p>
+          <p className="mb-5">{singleUser && singleUser.desc}</p>
 
           {/* <div className="bg-dark p-4 rounded mb-5">
             <h2 className="text-white mb-4">Big Dedication</h2>
@@ -117,9 +117,9 @@ export default function Blog() {
           <hr />
 
           <h3 className="mt-5 mb-4">Comments</h3>
-          {singlePost &&
-            singlePost.comments &&
-            singlePost.comments.map((elem) => {
+          {singleUser &&
+            singleUser.comments &&
+            singleUser.comments.map((elem) => {
               return (
                 <div className="bg-secondary p-3 rounded mb-3 d-flex">
                   <img
