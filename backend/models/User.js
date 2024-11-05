@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
     gender: {
         type: String,
     },
-    Status: {
+    status: {
         type: String,
     },
     resume_link: {
