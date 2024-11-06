@@ -31,10 +31,8 @@ export default function App() {
                 <Route path="/user/:userId" element={<User />}></Route>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/register" element={<Register />}></Route>
-                {/* <Route path="blog/:postId" element={<User1 />}></Route> */}
-                {/* <Route path="/profile/:userId" element={<Profile />}></Route> */}
               </Route>
-
+              {/* For Admin Users */}
               {/* <Route path="/dashboard" element={<Adminlayout />}>
                 <Route index element={<Admin />} />
                 <Route path="addpost" element={<AddPost />} />
