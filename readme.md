@@ -1,6 +1,6 @@
-# Freelance Connect
+# CodeBase
 
-Freelance Connect is a full-stack web application built with the MERN (MongoDB, Express, React, Node.js) stack. It allows users to register, log in, and view profiles of registered users. The app is designed to connect freelancers with potential clients, helping people collaborate based on their profiles and expertise.
+CodeBase is a full-stack web application built with the MERN (MongoDB, Express, React, Node.js) stack. It allows users to register, log in, and view profiles of registered users. The app is designed to connect freelancers with potential clients, helping people collaborate based on their profiles and expertise.
 
 ## Features
 
@@ -58,11 +58,8 @@ Follow these instructions to set up and run the project on your local machine.
     ```bash
     cd frontend
     npm run dev
-
-
 ### Project Structure
 
-    ```plaintext
     Codebase/
     ├── frontend/               # React frontend
     ├── backend/               # Express backend
@@ -72,13 +69,10 @@ Follow these instructions to set up and run the project on your local machine.
     │   ├── middleware/       # Middleware for authentication, etc.
     |   |── .env.example          # Example of environment variables
     │   └── index.js         # Entry point of the server
-    ├── README.md             # Project documentation
-    ```
-
+    └── README.md             # Project documentation
+    
 
 ### API Endpoints
-
-## API Endpoints
 
 Here’s a list of key API endpoints available in the backend:
 
@@ -91,7 +85,7 @@ Here’s a list of key API endpoints available in the backend:
 | DELETE | `/dashboard/delete/:id`   | Get specific user profile         |
 | GET    | `/public/Singleuser/:id`  | Get specific user profile         |
 
-Here’s a list of key API endpoints available in the frontend:
+Here’s a list of key API routes available in the **frontend**:
 
 | Method | Endpoint               | Description                          |
 |--------|------------------------|--------------------------------------|
