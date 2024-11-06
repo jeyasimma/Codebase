@@ -22,7 +22,6 @@ export default function User() {
 
   return (
     <div className="container text-white mt-5 mb-5">
-      <p>kjabskcbkjba</p>
       {singleUser ? (
         <div className="row">
           {/* Profile Image and Basic Info */}
