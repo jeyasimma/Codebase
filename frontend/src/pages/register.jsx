@@ -129,20 +129,19 @@ export default function Register() {
         method: "POST",
         body: JSON.stringify(formDataValue),
         headers: {
-          // Accept: 000"application/json",
           "Content-Type": "multipart/form-data",
         },
       }).then(async (response) => {
         // const response = await post("/auth/register", formData);
-
-        const data = response.data;
-
-        if (data.success) {
-          console.log(data.message);
-          toast.success(data.message); // Show success toast
-          navigate("/login"); // Navigate to login page after successful registration
-        } else {
-          toast.error(data.message); // Show error message if the backend returns failure
+        if (response.ok) {
+          const data = response.data;
+          if (data.success) {
+            console.log(data.message);
+            toast.success(data.message); // Show success toast
+            navigate("/login"); // Navigate to login page after successful registration
+          } else {
+            toast.error(data.message); // Show error message if the backend returns failure
+          }
         }
       });
     } catch (error) {
@@ -377,7 +376,7 @@ export default function Register() {
                   name="resume_link"
                   value={formDataValue.resume_link}
                   onChange={handleChange}
-                  required
+                  placeholder="Optional"
                 />
               </div>
 
