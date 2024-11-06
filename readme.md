@@ -31,6 +31,7 @@ Follow these instructions to set up and run the project on your local machine.
    ```bash
    git clone https://github.com/AbhilashK26/Codebase.git
    cd Codebase
+   ```
 
 2. **Install Dependencies**:
 
@@ -40,7 +41,8 @@ Follow these instructions to set up and run the project on your local machine.
 
     cd backend
     npm install
-
+    ```
+    
 3. **Create .env file**
    
    Environment Variables Create a .env file in the server folder with the following variables:
@@ -52,24 +54,51 @@ Follow these instructions to set up and run the project on your local machine.
     CLOUDINARY_CLOUD_NAME=
     CLOUDINARY_API_KEY=
     CLOUDINARY_API_SECRET=
+    ```
 
 1. **Run the Application**
+    
+    For backend: Run the backend server inside backend directory
+    ```bash
+    cd backend
+    npm run dev
+    ```
 
+    For frontend: Run the frontend server inside frontend directory
     ```bash
     cd frontend
     npm run dev
+    ```
+
 ### Project Structure
 
     Codebase/
     ├── frontend/               # React frontend
+    │    ├── src/
+    │    │   ├── assets/
+    │    │   ├── components/
+    │    │   ├── layout/
+    │    │   ├── pages/
+    │    │   ├── redux/
+    │    │   ├── services/
+    │    │   ├── App.css
+    │    │   ├── App.jsx
+    │    │   ├── index.css
+    │    │   └── main.jsx
+    │    ├── index.html
+    │    ├── package-lock.json
+    │    └── package.json
+    |
     ├── backend/               # Express backend
-    │   ├── models/           # Mongoose models
-    │   ├── routes/           # Express routes
-    │   ├── controllers/      # Controllers for handling business logic
-    │   ├── middleware/       # Middleware for authentication, etc.
-    |   |── .env.example          # Example of environment variables
-    │   └── index.js         # Entry point of the server
-    └── README.md             # Project documentation
+    │   ├── models/            # Mongoose models
+    │   ├── routes/            # Express routes
+    │   ├── controllers/       # Controllers for handling business logic
+    │   ├── middleware/        # Middleware for authentication, etc.
+    |   |── .env               # Example of environment variables
+    │   |── index.js           # Entry point of the server
+    │   ├── package-lock.json
+    │   └── package.json
+    └── README.md              # Project documentation
     
 
 ### API Endpoints
@@ -109,12 +138,14 @@ We welcome contributions! Follow these steps to contribute to this project.
    ```bash
    git clone https://github.com/AbhilashK26/Codebase.git
    cd Codebase
+   ```
 
 3. **Create a Branch**
     Create a new branch for your feature or bugfix:
 
     ```bash
     git checkout -b feature/YourFeatureName
+    ```
 
 4. **Make Your Changes**
     Write clean, readable, and well-documented code. Ensure that the code passes all tests and follows the project's coding standards. You can also attach a working video to demonstrate your changes.
@@ -125,7 +156,8 @@ We welcome contributions! Follow these steps to contribute to this project.
     git add <file_name>
     git commit -m "Add YourFeatureName"
     git push origin feature/YourFeatureName
-    
+    ```
+
 6. **Create a Pull Request**
     Go to the original repository on GitHub, click on the "Pull Request" tab, and submit your pull request. Include a detailed description of the changes you made and` why they should be merged.
 
