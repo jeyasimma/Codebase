@@ -7,10 +7,13 @@ import bcrypt from 'bcrypt'
 // var bcrypt = require('../node_modules/bcrypt/bcrypt.js');
 
 const Register = async (req, res) => {
+    console.log('BYe');
+    console.log('req',req);
     try {
-        const { FullName, email, password, gender, dept, skills, role, year, status, resume_link, CGPA, primary_lang, phone, whatsapp} = req.body
+        const { FullName, email, password, gender, dept, skills, year, status, resume_link, phone, whatsapp} = req.body
         // Upload the image to Cloudinary
         const imagePath = req.file.filename;
+        console.log('req',req);
         // const cloudinaryResult = await FileUploadeToColoudinary(imagePath, 'user_profiles');
         console.log(imagePath)
         // Create a new user with the uploaded image URL
@@ -27,12 +30,12 @@ const Register = async (req, res) => {
             gender: gender,
             dept: dept,
             skills:skills,
-            role:  role,
+            role:  "user",
             year: year,
             status: status,
             resume_link: resume_link,
-            CGPA: CGPA,
-            primary_lang: primary_lang,
+            CGPA: "user",
+            primary_lang: "Eng  ",
             phone: phone,
             whatsapp: whatsapp
         });

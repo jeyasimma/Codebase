@@ -32,7 +32,7 @@ export default function Navbar() {
       <div className="d-flex align-items-center">
         {!user ? (
           <Link to={"/login"}>
-            <button className="btn_sign mx-3">Sign in</button>
+            <button className="btn_sign mx-3">Login</button>
           </Link>
         ) : (
           <div className="dropdown">
@@ -61,7 +61,7 @@ export default function Navbar() {
                 ""
               )}
               <li>
-                <Link className="dropdown-item" to={`/profile/${user._id}`}>
+                <Link className="dropdown-item" to={`/user/${user._id}`}>
                   Profile
                 </Link>
               </li>

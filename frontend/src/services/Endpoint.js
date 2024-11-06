@@ -17,7 +17,8 @@ export const patch = (url, data) => instance.patch(url, data)
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
     // Log the request config for debugging
-    console.log('Request Config:', config);
+    // console.log('Request Config2:', config);
+    console.log('HI');
     return config;
 }, function (error) {
     // Do something with request error
@@ -32,6 +33,7 @@ instance.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
     // Log the error message for debugging
-    console.log('Api Error', error.message);
+    // console.log(error);
+    console.log('Api2 Error', error.message);
     return Promise.reject(error);
 });

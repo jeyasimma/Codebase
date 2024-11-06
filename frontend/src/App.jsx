@@ -9,7 +9,9 @@ import UserLayout from "./Layout/UserLayout";
 // import User1 from "./pages/Admin/user";
 // import User2 from "./pages/user";
 // import AllPost from "./pages/AllPost";
-// import Login from "./pages/Login";
+// import login from "./pages/login";
+import Login from "./pages/login";
+import Register from "./pages/register";
 // import Register from "./pages/Register";
 import { Provider } from "react-redux";
 import { peristor, store } from "./redux/store";
@@ -24,10 +26,11 @@ export default function App() {
         <Provider store={store}>
           <PersistGate loading={null} persistor={peristor}>
             <Routes>
-
               <Route path="/" element={<UserLayout />}>
                 <Route index element={<Home />} />
                 <Route path="/user/:userId" element={<User />}></Route>
+                <Route path="/login" element={<Login />}></Route>
+                <Route path="/register" element={<Register />}></Route>
                 {/* <Route path="blog/:postId" element={<User1 />}></Route> */}
                 {/* <Route path="/profile/:userId" element={<Profile />}></Route> */}
               </Route>
@@ -38,9 +41,6 @@ export default function App() {
                 <Route path="users" element={<User2 />} />
                 <Route path="allposts" element={<AllPost />} />
               </Route> */}
-              {/* <Route path="/login" element={<Login />}></Route> */}
-              {/* <Route path="/register" element={<Register />}></Route> */}
-
             </Routes>
           </PersistGate>
         </Provider>
