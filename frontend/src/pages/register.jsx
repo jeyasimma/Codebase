@@ -12,7 +12,7 @@ export default function Register() {
     confirmPassword: "",
     gender: "",
     dept: "",
-    skills: "",
+    skills: [],
     year: "",
     status: "",
     resume_link: "",
@@ -33,6 +33,17 @@ export default function Register() {
     setProfile(e.target.files[0]);
   };
 
+  const handleTechStackChange = (e) => {
+    const value = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    setFormData((prevData) => ({
+      ...prevData,
+      skills: value,
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
@@ -41,23 +52,15 @@ export default function Register() {
     }
 
     const data = new FormData();
-    data.append("FullName", formData.FullName);
-    data.append("email", formData.email);
-    data.append("password", formData.password);
-    data.append("gender", formData.gender);
-    data.append("dept", formData.dept);
-    data.append("skills", formData.skills);
-    data.append("year", formData.year);
-    data.append("status", formData.status);
-    data.append("resume_link", formData.resume_link);
-    data.append("phone", formData.phone);
-    data.append("whatsapp", formData.whatsapp);
+    for (const key in formData) {
+      data.append(key, formData[key]);
+    }
     if (profile) data.append("profile", profile);
 
     try {
       await post("/auth/register", data);
       toast.success("Registration successful!");
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.error("Registration error:", error);
       toast.error("Failed to register. Please try again.");
@@ -65,188 +68,268 @@ export default function Register() {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 mb-5">
       <div className="row justify-content-center">
-        <div className="col-md-8 col-lg-6">
-          <h2 className="text-center mb-4">Register</h2>
-          <form onSubmit={handleSubmit} encType="multipart/form-data">
-            <div className="mb-3">
-              <label className="form-label">Full Name</label>
-              <input
-                type="text"
-                name="FullName"
-                className="form-control"
-                value={formData.FullName}
-                onChange={handleChange}
-                required
-              />
-            </div>
+        <div className="col-lg-8 col-md-10">
+          <div className="card shadow-lg p-4">
+            <h2 className="text-center mb-4">Register</h2>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
+              <div className="mb-3">
+                <label className="form-label">Full Name</label>
+                <input
+                  type="text"
+                  name="FullName"
+                  className="form-control"
+                  value={formData.FullName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <div className="mb-3">
-              <label className="form-label">Email</label>
-              <input
-                type="email"
-                name="email"
-                className="form-control"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="mb-3">
+                <label className="form-label">Gender</label>
+                <select
+                  name="gender"
+                  className="form-select"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+              </div>
 
-            <div className="mb-3">
-              <label className="form-label">Password</label>
-              <input
-                type="password"
-                name="password"
-                className="form-control"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="mb-3">
+                <label className="form-label">Department</label>
+                <select
+                  name="dept"
+                  className="form-select"
+                  value={formData.dept}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Department</option>
+                  <option value="Aerospace Engineering and Applied Mechanics">
+                    Aerospace Engineering and Applied Mechanics
+                  </option>
+                  <option value="Architecture and Planning">
+                    Architecture and Planning
+                  </option>
+                  <option value="Civil Engineering">Civil Engineering</option>
+                  <option value="Computer Science and Technology">
+                    Computer Science and Technology
+                  </option>
+                  <option value="Electrical Engineering">
+                    Electrical Engineering
+                  </option>
+                  <option value="Electronics and Telecommunication Engineering">
+                    Electronics and Telecommunication Engineering
+                  </option>
+                  <option value="Information Technology">
+                    Information Technology
+                  </option>
+                  <option value="Mechanical Engineering">
+                    Mechanical Engineering
+                  </option>
+                  <option value="Metallurgy and Materials Engineering">
+                    Metallurgy and Materials Engineering
+                  </option>
+                  <option value="Mining Engineering">Mining Engineering</option>
+                </select>
+              </div>
 
-            <div className="mb-3">
-              <label className="form-label">Confirm Password</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                className="form-control"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="mb-3">
+                <label className="form-label">Tech Stack</label>
+                <select
+                  name="skills"
+                  className="form-select"
+                  multiple
+                  onChange={handleTechStackChange}
+                  value={formData.skills}
+                >
+                  <option value="C">C</option>
+                  <option value="C++">C++</option>
+                  <option value="Java">Java</option>
+                  <option value="Python">Python</option>
+                  <option value="JavaScript">JavaScript</option>
+                  <option value="UI/UX">UI/UX</option>
+                  <option value="Machine Learning">Machine Learning</option>
+                  <option value="Full-Stack Web Development">
+                    Full-Stack Web Development
+                  </option>
+                  <option value="App Development">App Development</option>
+                  <option value="Game Development">Game Development</option>
+                  <option value="Spring Boot">Spring Boot</option>
+                  <option value="Django">Django</option>
+                  <option value="Cloud Computing">Cloud Computing</option>
+                </select>
+              </div>
 
-            <div className="mb-3">
-              <label className="form-label">Department</label>
-              <input
-                type="text"
-                name="dept"
-                className="form-control"
-                value={formData.dept}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Skills</label>
-              <input
-                type="text"
-                name="skills"
-                className="form-control"
-                value={formData.skills}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Year</label>
-              <input
-                type="text"
-                name="year"
-                className="form-control"
-                value={formData.year}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Gender</label>
-              <select
-                name="gender"
-                className="form-select"
-                value={formData.gender}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Status</label>
-              <div>
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    className="form-check-input"
-                    name="status"
-                    value="active"
-                    checked={formData.status === "active"}
-                    onChange={handleChange}
-                  />
-                  <label className="form-check-label">Active</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    className="form-check-input"
-                    name="status"
-                    value="inactive"
-                    checked={formData.status === "inactive"}
-                    onChange={handleChange}
-                  />
-                  <label className="form-check-label">Inactive</label>
+              <div className="mb-3">
+                <h5>Selected Tech Stacks:</h5>
+                <div className="d-flex flex-wrap gap-2">
+                  {formData.skills.map((stack, index) => (
+                    <span
+                      key={index}
+                      className="badge bg-secondary d-flex align-items-center"
+                    >
+                      {stack}
+                      <button
+                        type="button"
+                        className="btn-close btn-close-white ms-2"
+                        aria-label="Close"
+                        onClick={() => {
+                          setFormData((prevData) => ({
+                            ...prevData,
+                            skills: prevData.skills.filter((s) => s !== stack),
+                          }));
+                        }}
+                      ></button>
+                    </span>
+                  ))}
                 </div>
               </div>
-            </div>
 
-            <div className="mb-3">
-              <label className="form-label">Profile Image</label>
-              <input
-                type="file"
-                name="profile"
-                className="form-control"
-                onChange={handleFileChange}
-                required
-              />
-            </div>
+              <div className="mb-3">
+                <label className="form-label">Availability</label>
+                <div className="d-flex gap-3">
+                  <div className="form-check">
+                    <input
+                      type="radio"
+                      className="form-check-input"
+                      name="status"
+                      value="Open to Work"
+                      checked={formData.status === "Open to Work"}
+                      onChange={handleChange}
+                      required
+                    />
+                    <label className="form-check-label">Open to Work</label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      type="radio"
+                      className="form-check-input"
+                      name="status"
+                      value="Not Available"
+                      checked={formData.status === "Not Available"}
+                      onChange={handleChange}
+                      required
+                    />
+                    <label className="form-check-label">Not Available</label>
+                  </div>
+                </div>
+              </div>
 
-            <div className="mb-3">
-              <label className="form-label">Resume Link</label>
-              <input
-                type="text"
-                name="resume_link"
-                className="form-control"
-                value={formData.resume_link}
-                onChange={handleChange}
-              />
-            </div>
+              <div className="mb-3">
+                <label className="form-label">Phone</label>
+                <input
+                  type="tel"
+                  className="form-control"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <div className="mb-3">
-              <label className="form-label">Phone</label>
-              <input
-                type="text"
-                name="phone"
-                className="form-control"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="mb-3">
+                <label className="form-label">WhatsApp</label>
+                <input
+                  type="tel"
+                  className="form-control"
+                  name="whatsapp"
+                  value={formData.whatsapp}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <div className="mb-3">
-              <label className="form-label">WhatsApp</label>
-              <input
-                type="text"
-                name="whatsapp"
-                className="form-control"
-                value={formData.whatsapp}
-                onChange={handleChange}
-              />
-            </div>
+              <div className="mb-3">
+                <label className="form-label">Year</label>
+                <select
+                  name="year"
+                  className="form-select"
+                  value={formData.year}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Year</option>
+                  <option value="First Year">First Year</option>
+                  <option value="Second Year">Second Year</option>
+                  <option value="Third Year">Third Year</option>
+                  <option value="Fourth Year">Fourth Year</option>
+                  <option value="Graduated">Graduated</option>
+                </select>
+              </div>
 
-            <button type="submit" className="btn btn-primary w-100">
-              Register
-            </button>
-          </form>
+              <div className="mb-3">
+                <label className="form-label">Resume Link</label>
+                <input
+                  type="url"
+                  className="form-control"
+                  name="resume_link"
+                  value={formData.resume_link}
+                  onChange={handleChange}
+                  placeholder="Optional"
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Confirm Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Profile Photo</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  name="profile"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  required
+                />
+              </div>
+
+              <button type="submit" className="btn btn-primary w-100 mt-4">
+                Register
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
