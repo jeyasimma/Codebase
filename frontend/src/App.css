@@ -194,3 +194,42 @@ body {
 .profile-button:hover {
   background-color: #2B6CB0;
 }
+
+/* Register.css */
+.register-container {
+  background-color: #0d47a1;
+  /* Dark blue background */
+  padding: 2rem;
+  border-radius: 8px;
+  color: white;
+}
+
+.register-container .form-label {
+  color: white;
+  /* White text color for labels */
+}
+
+.register-container input,
+.register-container select,
+.register-container .form-check-label {
+  background-color: #1c3b75;
+  /* Darker blue for input backgrounds */
+  color: white;
+  border: none;
+}
+
+.register-container input::placeholder {
+  color: #cccccc;
+  /* Lighter text for placeholders */
+}
+
+.register-container .btn-primary {
+  background-color: #1976d2;
+  /* Slightly lighter blue for button */
+  border: none;
+}
+
+.register-container .btn-primary:hover {
+  background-color: #1565c0;
+  /* Darken on hover */
+}

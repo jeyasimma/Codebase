@@ -1,431 +1,252 @@
-// import React, { useState } from "react";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { post } from "../services/Endpoint";
 import toast from "react-hot-toast";
-// import "./App.css"; // Import the CSS file for global styling
 
 export default function Register() {
-  const [formDataValue, setformDataValue] = useState({
-    email: "",
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
     FullName: "",
-    gender: "",
-    dept: "",
-    skills: [],
-    status: "",
-    phone: "",
-    whatsapp: "",
-    year: "",
-    resume_link: "",
+    email: "",
     password: "",
     confirmPassword: "",
-    profile: "null",
+    gender: "",
+    dept: "",
+    skills: "",
+    year: "",
+    status: "",
+    resume_link: "",
+    phone: "",
+    whatsapp: "",
   });
-
-  const [error, setError] = useState("");
+  const [profile, setProfile] = useState(null);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setformDataValue({
-      ...formDataValue,
-      [name]: type === "checkbox" ? checked : value,
-    });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handleTechStackChange = (e) => {
-    const value = e.target.value;
-    if (formDataValue.skills.includes(value)) {
-      setformDataValue({
-        ...formDataValue,
-        skills: formDataValue.skills.filter((stack) => stack !== value),
-      });
-    } else {
-      setformDataValue({
-        ...formDataValue,
-        skills: [...formDataValue.skills, value],
-      });
-    }
-  };
-
-  const handleSubmit32 = async (e) => {
-    e.preventDefault();
-
-    if (formDataValue.password !== formDataValue.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    const formData = new FormData();
-    // formData.append("FullName", formDataValue.FullName);
-    formData.append(formDataValue.FullName, "FullName");
-    // formData.append("email", formDataValue.email);
-    // formData.append("gender", formDataValue.gender);
-    // formData.append("profile", formDataValue.profile);
-    formData.forEach((key, val) => {
-      console.log(key, val);
-    });
-    try {
-      console.log(formDataValue);
-      // console.log(formData);
-      const response = await post("/auth/register", formData);
-      // console.log('hpop',response);
-      // console.log('bjn');
-      const data = response.data;
-      if (data.success) {
-        console.log(data.message);
-        navigate("/login");
-        toast.success(data.message);
-      }
-      console.log("register api", data);
-    } catch (error) {
-      console.log(error);
-      console.error("login error", error);
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        // setError(error.response.data.message); // Set error message from server response
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
-      }
-    }
-
-    // setError("");
-    console.log("ahkdagdgagkjdgavdjkg");
-    console.log(formDataValue);
+  const handleFileChange = (e) => {
+    setProfile(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate password and confirmPassword match
-    if (formDataValue.password !== formDataValue.confirmPassword) {
-      setError("Passwords do not match");
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match!");
       return;
     }
 
-    // Create FormData object for file upload
-    const formData = new FormData();
-    formData.append("FullName", formDataValue.FullName);
-    formData.append("email", formDataValue.email);
-    formData.append("gender", formDataValue.gender);
-    formData.append("dept", formDataValue.dept);
-    formData.append("skills", JSON.stringify(formDataValue.skills)); // Assuming skills is an array
-    formData.append("status", formDataValue.status);
-    formData.append("phone", formDataValue.phone);
-    formData.append("whatsapp", formDataValue.whatsapp);
-    formData.append("year", formDataValue.year);
-    formData.append("resume_link", formDataValue.resume_link);
-    formData.append("password", formDataValue.password);
-    formData.append(
-      "profile",
-      formDataValue.profile ? formDataValue.profile : null
-    ); // Append profile picture (if available)
+    const data = new FormData();
+    data.append("FullName", formData.FullName);
+    data.append("email", formData.email);
+    data.append("password", formData.password);
+    data.append("gender", formData.gender);
+    data.append("dept", formData.dept);
+    data.append("skills", formData.skills);
+    data.append("year", formData.year);
+    data.append("status", formData.status);
+    data.append("resume_link", formData.resume_link);
+    data.append("phone", formData.phone);
+    data.append("whatsapp", formData.whatsapp);
+    if (profile) data.append("profile", profile);
 
     try {
-      fetch("/auth/register", {
-        method: "POST",
-        body: JSON.stringify(formDataValue),
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }).then(async (response) => {
-        // const response = await post("/auth/register", formData);
-        if (response.ok) {
-          const data = response.data;
-          if (data.success) {
-            console.log(data.message);
-            toast.success(data.message); // Show success toast
-            navigate("/login"); // Navigate to login page after successful registration
-          } else {
-            toast.error(data.message); // Show error message if the backend returns failure
-          }
-        }
-      });
+      await post("/auth/register", data);
+      toast.success("Registration successful!");
+      navigate("/");
     } catch (error) {
-      console.error("Registration Error: ", error);
-
-      if (error.response && error.response.data) {
-        // If error response from server, show error message
-        toast.error(error.response.data.message);
-      } else {
-        // Handle unexpected errors
-        toast.error("An unexpected error occurred. Please try again.");
-      }
+      console.error("Registration error:", error);
+      toast.error("Failed to register. Please try again.");
     }
   };
 
   return (
-    <div className="container mt-5 mb-5">
+    <div className="container mt-5">
       <div className="row justify-content-center">
-        <div className="col-lg-8 col-md-10">
-          <div className="card shadow-lg p-4">
-            <h2 className="text-center mb-4">Register</h2>
-            <form onSubmit={handleSubmit}>
-              {/* Name */}
-              <div className="mb-3">
-                <label className="form-label">Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="FullName"
-                  value={formDataValue.FullName}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+        <div className="col-md-8 col-lg-6">
+          <h2 className="text-center mb-4">Register</h2>
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
+            <div className="mb-3">
+              <label className="form-label">Full Name</label>
+              <input
+                type="text"
+                name="FullName"
+                className="form-control"
+                value={formData.FullName}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-              {/* Gender */}
-              <div className="mb-3">
-                <label className="form-label">Gender</label>
-                <select
-                  className="form-select"
-                  name="gender"
-                  value={formDataValue.gender}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Prefer not to say">Prefer not to say</option>
-                </select>
-              </div>
+            <div className="mb-3">
+              <label className="form-label">Email</label>
+              <input
+                type="email"
+                name="email"
+                className="form-control"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-              {/* Department */}
-              <div className="mb-3">
-                <label className="form-label">Department</label>
-                <select
-                  className="form-select"
-                  name="dept"
-                  value={formDataValue.dept}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select Department</option>
-                  <option value="Aerospace Engineering and Applied Mechanics">
-                    Aerospace Engineering and Applied Mechanics
-                  </option>
-                  <option value="Architecture and Planning">
-                    Architecture and Planning
-                  </option>
-                  <option value="Civil Engineering">Civil Engineering</option>
-                  <option value="Computer Science and Technology">
-                    Computer Science and Technology
-                  </option>
-                  <option value="Electrical Engineering">
-                    Electrical Engineering
-                  </option>
-                  <option value="Electronics and Telecommunication Engineering">
-                    Electronics and Telecommunication Engineering
-                  </option>
-                  <option value="Information Technology">
-                    Information Technology
-                  </option>
-                  <option value="Mechanical Engineering">
-                    Mechanical Engineering
-                  </option>
-                  <option value="Metallurgy and Materials Engineering">
-                    Metallurgy and Materials Engineering
-                  </option>
-                  <option value="Mining Engineering">Mining Engineering</option>
-                </select>
-              </div>
+            <div className="mb-3">
+              <label className="form-label">Password</label>
+              <input
+                type="password"
+                name="password"
+                className="form-control"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-              {/* Tech Stack */}
-              <div className="mb-3">
-                <label className="form-label">Tech Stack</label>
-                <select
-                  className="form-select"
-                  name="skills"
-                  multiple
-                  onChange={handleTechStackChange}
-                >
-                  <option value="C">C</option>
-                  <option value="C++">C++</option>
-                  <option value="Java">Java</option>
-                  <option value="Python">Python</option>
-                  <option value="JavaScript">JavaScript</option>
-                  <option value="UI/UX">UI/UX</option>
-                  <option value="Machine Learning">Machine Learning</option>
-                  <option value="Full-Stack Web Development">
-                    Full-Stack Web Development
-                  </option>
-                  <option value="App Development">App Development</option>
-                  <option value="Game Development">Game Development</option>
-                  <option value="Spring Boot">Spring Boot</option>
-                  <option value="Django">Django</option>
-                  <option value="Cloud Computing">Cloud Computing</option>
-                </select>
-              </div>
+            <div className="mb-3">
+              <label className="form-label">Confirm Password</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                className="form-control"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-              {/* Selected Tech Stacks */}
-              <div className="mb-3">
-                <h5>Selected Tech Stacks:</h5>
-                <div className="d-flex flex-wrap gap-2">
-                  {formDataValue.skills.map((stack, index) => (
-                    <span
-                      key={index}
-                      className="badge bg-secondary d-flex align-items-center"
-                    >
-                      {stack}
-                      <button
-                        type="button"
-                        className="btn-close btn-close-white ms-2"
-                        aria-label="Close"
-                        onClick={() => {
-                          setformDataValue({
-                            ...formDataValue,
-                            skills: formDataValue.skills.filter(
-                              (s) => s !== stack
-                            ),
-                          });
-                        }}
-                      ></button>
-                    </span>
-                  ))}
+            <div className="mb-3">
+              <label className="form-label">Department</label>
+              <input
+                type="text"
+                name="dept"
+                className="form-control"
+                value={formData.dept}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label">Skills</label>
+              <input
+                type="text"
+                name="skills"
+                className="form-control"
+                value={formData.skills}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label">Year</label>
+              <input
+                type="text"
+                name="year"
+                className="form-control"
+                value={formData.year}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label">Gender</label>
+              <select
+                name="gender"
+                className="form-select"
+                value={formData.gender}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label">Status</label>
+              <div>
+                <div className="form-check form-check-inline">
+                  <input
+                    type="radio"
+                    className="form-check-input"
+                    name="status"
+                    value="active"
+                    checked={formData.status === "active"}
+                    onChange={handleChange}
+                  />
+                  <label className="form-check-label">Active</label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    type="radio"
+                    className="form-check-input"
+                    name="status"
+                    value="inactive"
+                    checked={formData.status === "inactive"}
+                    onChange={handleChange}
+                  />
+                  <label className="form-check-label">Inactive</label>
                 </div>
               </div>
+            </div>
 
-              {/* Availability */}
-              <div className="mb-3">
-                <label className="form-label">Availability</label>
-                <div className="d-flex gap-3">
-                  <div className="form-check">
-                    <input
-                      type="radio"
-                      name="status"
-                      value="Open to Work"
-                      checked={formDataValue.status === "Open to Work"}
-                      onChange={handleChange}
-                      className="form-check-input"
-                      required
-                    />
-                    <label className="form-check-label">Open to Work</label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      type="radio"
-                      name="status"
-                      value="Not Available"
-                      checked={formDataValue.status === "Not Available"}
-                      onChange={handleChange}
-                      className="form-check-input"
-                      required
-                    />
-                    <label className="form-check-label">Not Available</label>
-                  </div>
-                </div>
-              </div>
+            <div className="mb-3">
+              <label className="form-label">Profile Image</label>
+              <input
+                type="file"
+                name="profile"
+                className="form-control"
+                onChange={handleFileChange}
+                required
+              />
+            </div>
 
-              {/* Phone Number */}
-              <div className="mb-3">
-                <label className="form-label">Phone Number</label>
-                <input
-                  type="tel"
-                  className="form-control"
-                  name="phone"
-                  value={formDataValue.phone}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+            <div className="mb-3">
+              <label className="form-label">Resume Link</label>
+              <input
+                type="text"
+                name="resume_link"
+                className="form-control"
+                value={formData.resume_link}
+                onChange={handleChange}
+              />
+            </div>
 
-              {/* WhatsApp Number */}
-              <div className="mb-3">
-                <label className="form-label">WhatsApp Number</label>
-                <input
-                  type="tel"
-                  className="form-control"
-                  name="whatsapp"
-                  value={formDataValue.whatsapp}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+            <div className="mb-3">
+              <label className="form-label">Phone</label>
+              <input
+                type="text"
+                name="phone"
+                className="form-control"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-              {/* Year */}
-              <div className="mb-3">
-                <label className="form-label">Year</label>
-                <select
-                  className="form-select"
-                  name="year"
-                  value={formDataValue.year}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select Year</option>
-                  <option value="First Year">First Year</option>
-                  <option value="Second Year">Second Year</option>
-                  <option value="Third Year">Third Year</option>
-                  <option value="Fourth Year">Fourth Year</option>
-                  <option value="Graduated">Graduated</option>
-                </select>
-              </div>
+            <div className="mb-3">
+              <label className="form-label">WhatsApp</label>
+              <input
+                type="text"
+                name="whatsapp"
+                className="form-control"
+                value={formData.whatsapp}
+                onChange={handleChange}
+              />
+            </div>
 
-              {/* Resume Link */}
-              <div className="mb-3">
-                <label className="form-label">
-                  Resume Link (Make the link accessible to all)
-                </label>
-                <input
-                  type="url"
-                  className="form-control"
-                  name="resume_link"
-                  value={formDataValue.resume_link}
-                  onChange={handleChange}
-                  placeholder="Optional"
-                />
-              </div>
-
-              {/* Email */}
-              <div className="mb-3">
-                <label className="form-label">Email</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  name="email"
-                  value={formDataValue.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              {/* Password */}
-              <div className="mb-3">
-                <label className="form-label">Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  value={formDataValue.password}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              {/* Confirm Password */}
-              <div className="mb-3">
-                <label className="form-label">Confirm Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  name="confirmPassword"
-                  value={formDataValue.confirmPassword}
-                  onChange={handleChange}
-                  required
-                />
-                {error && <div className="text-danger mt-1">{error}</div>}
-              </div>
-
-              {/* Submit Button */}
-              <button type="submit" className="btn btn-primary w-100">
-                Submit
-              </button>
-            </form>
-          </div>
+            <button type="submit" className="btn btn-primary w-100">
+              Register
+            </button>
+          </form>
         </div>
       </div>
     </div>
