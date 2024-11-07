@@ -1,159 +1,69 @@
-// import React, { useState } from "react";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { post } from "../services/Endpoint";
 import toast from "react-hot-toast";
-// import "./App.css"; // Import the CSS file for global styling
 
 export default function Register() {
-  const [formDataValue, setformDataValue] = useState({
-    email: "",
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
     FullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
     gender: "",
     dept: "",
     skills: [],
+    year: "",
     status: "",
+    resume_link: "",
     phone: "",
     whatsapp: "",
-    year: "",
-    resume_link: "",
-    password: "",
-    confirmPassword: "",
-    profile: "null",
   });
-
-  const [error, setError] = useState("");
+  const [profile, setProfile] = useState(null);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setformDataValue({
-      ...formDataValue,
-      [name]: type === "checkbox" ? checked : value,
-    });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    setProfile(e.target.files[0]);
   };
 
   const handleTechStackChange = (e) => {
-    const value = e.target.value;
-    if (formDataValue.skills.includes(value)) {
-      setformDataValue({
-        ...formDataValue,
-        skills: formDataValue.skills.filter((stack) => stack !== value),
-      });
-    } else {
-      setformDataValue({
-        ...formDataValue,
-        skills: [...formDataValue.skills, value],
-      });
-    }
-  };
-
-  const handleSubmit32 = async (e) => {
-    e.preventDefault();
-
-    if (formDataValue.password !== formDataValue.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    const formData = new FormData();
-    // formData.append("FullName", formDataValue.FullName);
-    formData.append(formDataValue.FullName, "FullName");
-    // formData.append("email", formDataValue.email);
-    // formData.append("gender", formDataValue.gender);
-    // formData.append("profile", formDataValue.profile);
-    formData.forEach((key, val) => {
-      console.log(key, val);
-    });
-    try {
-      console.log(formDataValue);
-      // console.log(formData);
-      const response = await post("/auth/register", formData);
-      // console.log('hpop',response);
-      // console.log('bjn');
-      const data = response.data;
-      if (data.success) {
-        console.log(data.message);
-        navigate("/login");
-        toast.success(data.message);
-      }
-      console.log("register api", data);
-    } catch (error) {
-      console.log(error);
-      console.error("login error", error);
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        // setError(error.response.data.message); // Set error message from server response
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
-      }
-    }
-
-    // setError("");
-    console.log("ahkdagdgagkjdgavdjkg");
-    console.log(formDataValue);
+    const value = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    setFormData((prevData) => ({
+      ...prevData,
+      skills: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate password and confirmPassword match
-    if (formDataValue.password !== formDataValue.confirmPassword) {
-      setError("Passwords do not match");
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match!");
       return;
     }
 
-    // Create FormData object for file upload
-    const formData = new FormData();
-    formData.append("FullName", formDataValue.FullName);
-    formData.append("email", formDataValue.email);
-    formData.append("gender", formDataValue.gender);
-    formData.append("dept", formDataValue.dept);
-    formData.append("skills", JSON.stringify(formDataValue.skills)); // Assuming skills is an array
-    formData.append("status", formDataValue.status);
-    formData.append("phone", formDataValue.phone);
-    formData.append("whatsapp", formDataValue.whatsapp);
-    formData.append("year", formDataValue.year);
-    formData.append("resume_link", formDataValue.resume_link);
-    formData.append("password", formDataValue.password);
-    formData.append(
-      "profile",
-      formDataValue.profile ? formDataValue.profile : null
-    ); // Append profile picture (if available)
+    const data = new FormData();
+    for (const key in formData) {
+      data.append(key, formData[key]);
+    }
+    if (profile) data.append("profile", profile);
 
     try {
-      fetch("/auth/register", {
-        method: "POST",
-        body: JSON.stringify(formDataValue),
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }).then(async (response) => {
-        // const response = await post("/auth/register", formData);
-        if (response.ok) {
-          const data = response.data;
-          if (data.success) {
-            console.log(data.message);
-            toast.success(data.message); // Show success toast
-            navigate("/login"); // Navigate to login page after successful registration
-          } else {
-            toast.error(data.message); // Show error message if the backend returns failure
-          }
-        }
-      });
+      await post("/auth/register", data);
+      toast.success("Registration successful!");
+      navigate("/login");
     } catch (error) {
-      console.error("Registration Error: ", error);
-
-      if (error.response && error.response.data) {
-        // If error response from server, show error message
-        toast.error(error.response.data.message);
-      } else {
-        // Handle unexpected errors
-        toast.error("An unexpected error occurred. Please try again.");
-      }
+      console.error("Registration error:", error);
+      toast.error("Failed to register. Please try again.");
     }
   };
 
@@ -163,27 +73,25 @@ export default function Register() {
         <div className="col-lg-8 col-md-10">
           <div className="card shadow-lg p-4">
             <h2 className="text-center mb-4">Register</h2>
-            <form onSubmit={handleSubmit}>
-              {/* Name */}
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
               <div className="mb-3">
-                <label className="form-label">Name</label>
+                <label className="form-label">Full Name</label>
                 <input
                   type="text"
-                  className="form-control"
                   name="FullName"
-                  value={formDataValue.FullName}
+                  className="form-control"
+                  value={formData.FullName}
                   onChange={handleChange}
                   required
                 />
               </div>
 
-              {/* Gender */}
               <div className="mb-3">
                 <label className="form-label">Gender</label>
                 <select
-                  className="form-select"
                   name="gender"
-                  value={formDataValue.gender}
+                  className="form-select"
+                  value={formData.gender}
                   onChange={handleChange}
                   required
                 >
@@ -194,13 +102,12 @@ export default function Register() {
                 </select>
               </div>
 
-              {/* Department */}
               <div className="mb-3">
                 <label className="form-label">Department</label>
                 <select
-                  className="form-select"
                   name="dept"
-                  value={formDataValue.dept}
+                  className="form-select"
+                  value={formData.dept}
                   onChange={handleChange}
                   required
                 >
@@ -234,14 +141,14 @@ export default function Register() {
                 </select>
               </div>
 
-              {/* Tech Stack */}
               <div className="mb-3">
                 <label className="form-label">Tech Stack</label>
                 <select
-                  className="form-select"
                   name="skills"
+                  className="form-select"
                   multiple
                   onChange={handleTechStackChange}
+                  value={formData.skills}
                 >
                   <option value="C">C</option>
                   <option value="C++">C++</option>
@@ -261,11 +168,10 @@ export default function Register() {
                 </select>
               </div>
 
-              {/* Selected Tech Stacks */}
               <div className="mb-3">
                 <h5>Selected Tech Stacks:</h5>
                 <div className="d-flex flex-wrap gap-2">
-                  {formDataValue.skills.map((stack, index) => (
+                  {formData.skills.map((stack, index) => (
                     <span
                       key={index}
                       className="badge bg-secondary d-flex align-items-center"
@@ -276,12 +182,10 @@ export default function Register() {
                         className="btn-close btn-close-white ms-2"
                         aria-label="Close"
                         onClick={() => {
-                          setformDataValue({
-                            ...formDataValue,
-                            skills: formDataValue.skills.filter(
-                              (s) => s !== stack
-                            ),
-                          });
+                          setFormData((prevData) => ({
+                            ...prevData,
+                            skills: prevData.skills.filter((s) => s !== stack),
+                          }));
                         }}
                       ></button>
                     </span>
@@ -289,18 +193,17 @@ export default function Register() {
                 </div>
               </div>
 
-              {/* Availability */}
               <div className="mb-3">
                 <label className="form-label">Availability</label>
                 <div className="d-flex gap-3">
                   <div className="form-check">
                     <input
                       type="radio"
+                      className="form-check-input"
                       name="status"
                       value="Open to Work"
-                      checked={formDataValue.status === "Open to Work"}
+                      checked={formData.status === "Open to Work"}
                       onChange={handleChange}
-                      className="form-check-input"
                       required
                     />
                     <label className="form-check-label">Open to Work</label>
@@ -308,11 +211,11 @@ export default function Register() {
                   <div className="form-check">
                     <input
                       type="radio"
+                      className="form-check-input"
                       name="status"
                       value="Not Available"
-                      checked={formDataValue.status === "Not Available"}
+                      checked={formData.status === "Not Available"}
                       onChange={handleChange}
-                      className="form-check-input"
                       required
                     />
                     <label className="form-check-label">Not Available</label>
@@ -320,39 +223,36 @@ export default function Register() {
                 </div>
               </div>
 
-              {/* Phone Number */}
               <div className="mb-3">
-                <label className="form-label">Phone Number</label>
+                <label className="form-label">Phone</label>
                 <input
                   type="tel"
                   className="form-control"
                   name="phone"
-                  value={formDataValue.phone}
+                  value={formData.phone}
                   onChange={handleChange}
                   required
                 />
               </div>
 
-              {/* WhatsApp Number */}
               <div className="mb-3">
-                <label className="form-label">WhatsApp Number</label>
+                <label className="form-label">WhatsApp</label>
                 <input
                   type="tel"
                   className="form-control"
                   name="whatsapp"
-                  value={formDataValue.whatsapp}
+                  value={formData.whatsapp}
                   onChange={handleChange}
                   required
                 />
               </div>
 
-              {/* Year */}
               <div className="mb-3">
                 <label className="form-label">Year</label>
                 <select
-                  className="form-select"
                   name="year"
-                  value={formDataValue.year}
+                  className="form-select"
+                  value={formData.year}
                   onChange={handleChange}
                   required
                 >
@@ -365,64 +265,68 @@ export default function Register() {
                 </select>
               </div>
 
-              {/* Resume Link */}
               <div className="mb-3">
-                <label className="form-label">
-                  Resume Link (Make the link accessible to all)
-                </label>
+                <label className="form-label">Resume Link</label>
                 <input
                   type="url"
                   className="form-control"
                   name="resume_link"
-                  value={formDataValue.resume_link}
+                  value={formData.resume_link}
                   onChange={handleChange}
                   placeholder="Optional"
                 />
               </div>
 
-              {/* Email */}
               <div className="mb-3">
                 <label className="form-label">Email</label>
                 <input
                   type="email"
                   className="form-control"
                   name="email"
-                  value={formDataValue.email}
+                  value={formData.email}
                   onChange={handleChange}
                   required
                 />
               </div>
 
-              {/* Password */}
               <div className="mb-3">
                 <label className="form-label">Password</label>
                 <input
                   type="password"
                   className="form-control"
                   name="password"
-                  value={formDataValue.password}
+                  value={formData.password}
                   onChange={handleChange}
                   required
                 />
               </div>
 
-              {/* Confirm Password */}
               <div className="mb-3">
                 <label className="form-label">Confirm Password</label>
                 <input
                   type="password"
                   className="form-control"
                   name="confirmPassword"
-                  value={formDataValue.confirmPassword}
+                  value={formData.confirmPassword}
                   onChange={handleChange}
                   required
                 />
-                {error && <div className="text-danger mt-1">{error}</div>}
               </div>
 
-              {/* Submit Button */}
-              <button type="submit" className="btn btn-primary w-100">
-                Submit
+              <div className="mb-3">
+                <label className="form-label">Profile Photo</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  name="profile"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  required
+                />
+              </div>
+
+              <button type="submit" className="btn btn-primary w-100 mt-4">
+                Register
               </button>
             </form>
           </div>

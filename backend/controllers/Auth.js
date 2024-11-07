@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt'
 // var bcrypt = require('../node_modules/bcrypt/bcrypt.js');
 
 const Register = async (req, res) => {
-    console.log('BYe');
+    // console.log('BYyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
     console.log('req',req);
     try {
         const { FullName, email, password, gender, dept, skills, year, status, resume_link, phone, whatsapp} = req.body
