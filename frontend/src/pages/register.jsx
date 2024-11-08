@@ -33,14 +33,14 @@ export default function Register() {
     setProfile(e.target.files[0]);
   };
 
+
   const handleTechStackChange = (e) => {
-    const value = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
+    const value = e.target.value;
     setFormData((prevData) => ({
       ...prevData,
-      skills: value,
+      skills: prevData.skills.includes(value)
+        ? prevData.skills.filter((skill) => skill !== value) // remove if already selected
+        : [...prevData.skills, value], // add if not selected
     }));
   };
 
