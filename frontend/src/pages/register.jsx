@@ -33,14 +33,13 @@ export default function Register() {
     setProfile(e.target.files[0]);
   };
 
-
   const handleTechStackChange = (e) => {
-    const value = e.target.value;
+    const value = e.target.value.trim().toLowerCase(); // Normalize input
     setFormData((prevData) => ({
       ...prevData,
       skills: prevData.skills.includes(value)
-        ? prevData.skills.filter((skill) => skill !== value) // remove if already selected
-        : [...prevData.skills, value], // add if not selected
+        ? prevData.skills.filter((skill) => skill !== value)
+        : [...prevData.skills, value],
     }));
   };
 
@@ -155,7 +154,15 @@ export default function Register() {
                   <option value="Java">Java</option>
                   <option value="Python">Python</option>
                   <option value="JavaScript">JavaScript</option>
-                  <option value="UI/UX">UI/UX</option>
+                  <option value="HTML">HTML</option>
+                  <option value="CSS">CSS</option>
+                  <option value="React">React</option>
+                  <option value="Express">Express</option>
+                  <option value="Node">Node</option>
+                  <option value="Angular">Angular</option>
+                  <option value="Keras">Keras</option>
+                  <option value="Pytorch">Pytorch</option>
+                  {/* <option value="UI/UX">UI/UX</option>
                   <option value="Machine Learning">Machine Learning</option>
                   <option value="Full-Stack Web Development">
                     Full-Stack Web Development
@@ -164,7 +171,7 @@ export default function Register() {
                   <option value="Game Development">Game Development</option>
                   <option value="Spring Boot">Spring Boot</option>
                   <option value="Django">Django</option>
-                  <option value="Cloud Computing">Cloud Computing</option>
+                  <option value="Cloud Computing">Cloud Computing</option> */}
                 </select>
               </div>
 
