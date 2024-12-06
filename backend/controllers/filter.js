@@ -11,20 +11,42 @@ export const filterUsers = async (req, res) => {
 
     let users = await UserModal.find(query);
 
+    // if (skills) {
+    //   // Check if skills parameter is not empty
+    //   if (skills.trim()) {
+    //     const skillsArray = skills
+    //       .split(",")
+    //       .map((skill) => skill.trim().toLowerCase()); // Normalize skills
+
+    //     users = users.filter((user) =>
+    //       skillsArray.every((skill) =>
+    //         user.skills.map((s) => s.toLowerCase()).includes(skill)
+    //       )
+    //     );
+    //   }
+    // }
+
     if (skills) {
       // Check if skills parameter is not empty
       if (skills.trim()) {
-        const skillsArray = skills
+        // Split the input skills string into an array of normalized skills
+        const skillsArray = skills[0]
           .split(",")
-          .map((skill) => skill.trim().toLowerCase()); // Normalize skills
-
-        users = users.filter((user) =>
-          skillsArray.every((skill) =>
-            user.skills.map((s) => s.toLowerCase()).includes(skill)
-          )
-        );
+          .map((skill) => skill.trim().toLowerCase());
+    
+        // Filter the users based on the skills
+        users = users.filter((user) => {
+          // Get the 0-indexed skills from the user and split into an array
+          const userSkillsArray = user.skills[0]
+            .split(",")
+            .map((s) => s.trim().toLowerCase());
+    
+          // Check if every skill in the input exists in the user's skills
+          return skillsArray.every((skill) => userSkillsArray.includes(skill));
+        });
       }
     }
+    
 
     if (!users.length) {
       return res

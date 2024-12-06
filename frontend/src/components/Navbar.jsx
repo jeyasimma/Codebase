@@ -99,6 +99,7 @@ export default function Navbar() {
     }).toString();
 
     navigate(`/filter?${queryParams}`);
+    // console.log(filters);
   };
 
   return (
