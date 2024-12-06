@@ -25,14 +25,16 @@ export const filterUsers = async (req, res) => {
     //     );
     //   }
     // }
-
+  console.log(skills);
     if (skills) {
       // Check if skills parameter is not empty
       if (skills.trim()) {
         // Split the input skills string into an array of normalized skills
-        const skillsArray = skills[0]
+        const skillsArray = skills
           .split(",")
           .map((skill) => skill.trim().toLowerCase());
+
+          console.log(skillsArray);
     
         // Filter the users based on the skills
         users = users.filter((user) => {
