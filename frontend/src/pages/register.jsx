@@ -33,16 +33,28 @@ export default function Register() {
     setProfile(e.target.files[0]);
   };
 
-  const handleTechStackChange = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions).map(
-      (option) => option.value.trim().toLowerCase() // Convert selected options to array of strings
-    );
+  // const handleTechStackChange = (e) => {
+  //   const selectedOptions = Array.from(e.target.selectedOptions).map(
+  //     (option) => option.value.trim().toLowerCase() // Convert selected options to array of strings
+  //   );
 
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     skills: selectedOptions, // Update the skills array
+  //   }));
+  // };
+
+
+  const handleTechStackChange = (e) => {
+    const value = e.target.value;
     setFormData((prevData) => ({
       ...prevData,
-      skills: selectedOptions, // Update the skills array
+      skills: prevData.skills.includes(value)
+        ? prevData.skills.filter((skill) => skill !== value) // remove if already selected
+        : [...prevData.skills, value], // add if not selected
     }));
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
