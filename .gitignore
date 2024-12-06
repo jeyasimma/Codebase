@@ -3,3 +3,6 @@
 
 # Ignore .env file
 **/.env
+
+# Ignore profile images in backend directory
+backend/public/images/
