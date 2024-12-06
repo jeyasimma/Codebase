@@ -34,12 +34,13 @@ export default function Register() {
   };
 
   const handleTechStackChange = (e) => {
-    const value = e.target.value.trim().toLowerCase(); // Normalize input
+    const selectedOptions = Array.from(e.target.selectedOptions).map(
+      (option) => option.value.trim().toLowerCase() // Convert selected options to array of strings
+    );
+
     setFormData((prevData) => ({
       ...prevData,
-      skills: prevData.skills.includes(value)
-        ? prevData.skills.filter((skill) => skill !== value)
-        : [...prevData.skills, value],
+      skills: selectedOptions, // Update the skills array
     }));
   };
 
