@@ -46,7 +46,7 @@ export default function Register() {
 
 
   const handleTechStackChange = (e) => {
-    const value = e.target.value;
+    const value = e.target.value.toLowerCase();
     setFormData((prevData) => ({
       ...prevData,
       skills: prevData.skills.includes(value)
