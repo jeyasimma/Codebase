@@ -5,4 +5,6 @@
 **/.env
 
 # Ignore profile images in backend directory
-backend/public/images/
+**/backend/public/images/
+
+
