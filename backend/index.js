@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
 app.use(express.static('public'));
 app.use(cookieParser());
 
+
 // Corrected typo here: `corsOptions`
 const corsOptions = {
     origin: true,
