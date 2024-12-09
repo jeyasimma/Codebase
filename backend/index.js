@@ -24,6 +24,7 @@ app.use(express.static('public'));
 app.use(cookieParser());
 
 // Corrected typo here: `corsOptions`
+app.use(cors());
 
 
 // const corsOptions = {
@@ -55,19 +56,19 @@ app.use(cookieParser());
 
 
 
-const corsOptions = {
-    origin: (origin, callback) => {
-        const allowedOrigins = ['https://codebaseclient.vercel.app'];
-        if (allowedOrigins.includes(origin) || !origin) {
-            callback(null, origin);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    methods: 'GET,POST,PUT,DELETE',
-    credentials: true, // Allow cookies and authentication headers
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//     origin: (origin, callback) => {
+//         const allowedOrigins = ['https://codebaseclient.vercel.app'];
+//         if (allowedOrigins.includes(origin) || !origin) {
+//             callback(null, origin);
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     },
+//     methods: 'GET,POST,PUT,DELETE',
+//     credentials: true, // Allow cookies and authentication headers
+// };
+// app.use(cors(corsOptions));
 
 
 app.use((req, res, next) => {
@@ -78,6 +79,16 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
 });
+
+// app.use(session({
+//     secret: 'your-secret-key',
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//         secure: true, // Cookies will only be sent over HTTPS
+//         sameSite: 'None', // Required for cross-origin requests
+//     },
+// }));
 
 
 app.use('/auth', AuthRoutes);
