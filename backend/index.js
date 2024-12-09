@@ -14,6 +14,34 @@ dotenv.config();
 
 const PORT = process.env.PORT || 4000;
 const app = express();
+
+
+
+
+app.use(cors());
+
+// const allowedOrigins = ['http://localhost:5173', 'https://codebaseclient.vercel.app'];
+
+// const corsOptions = {
+//     origin: (origin, callback) => {
+//         if (allowedOrigins.includes(origin) || !origin) {
+//             callback(null, origin);
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     },
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     credentials: true,
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+// };
+
+// app.use(cors(corsOptions)); // Apply CORS globally before any other middleware
+// app.options('*', cors(corsOptions)); // Handle preflight requests
+
+
+
+
+
 DBCon();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,7 +52,6 @@ app.use(express.static('public'));
 app.use(cookieParser());
 
 // Corrected typo here: `corsOptions`
-app.use(cors());
 
 
 // const corsOptions = {
@@ -56,29 +83,8 @@ app.use(cors());
 
 
 
-// const corsOptions = {
-//     origin: (origin, callback) => {
-//         const allowedOrigins = ['https://codebaseclient.vercel.app'];
-//         if (allowedOrigins.includes(origin) || !origin) {
-//             callback(null, origin);
-//         } else {
-//             callback(new Error('Not allowed by CORS'));
-//         }
-//     },
-//     methods: 'GET,POST,PUT,DELETE',
-//     credentials: true, // Allow cookies and authentication headers
-// };
-// app.use(cors(corsOptions));
 
 
-app.use((req, res, next) => {
-    console.log('Request Origin:', req.headers.origin);
-    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    next();
-});
 
 // app.use(session({
 //     secret: 'your-secret-key',
