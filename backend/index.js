@@ -24,16 +24,20 @@ app.use(express.static('public'));
 app.use(cookieParser());
 
 // Corrected typo here: `corsOptions`
+
+
 // const corsOptions = {
 //     origin: true,
 //     credentials: true,
 // };
-
-// const corsOptions = {
-//     origin: "https://codebaseclient.vercel.app",
-//     credentials: true,
-// };
 // app.use(cors(corsOptions));
+
+const corsOptions = {
+    origin: "https://codebaseclient.vercel.app",
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true,
+};
+app.use(cors(corsOptions));
 
 // const corsOptions = {
 //     origin: "https://codebaseclient-git-rohit-abhilash-kumars-projects-289775f5.vercel.app",
@@ -41,13 +45,13 @@ app.use(cookieParser());
 // };
 // app.use(cors(corsOptions));
 
-// const cors = require('cors');
 
-app.use(cors({
-  origin: 'https://codebaseclient-git-rohit-abhilash-kumars-projects-289775f5.vercel.app', // Frontend URL
-  methods: 'GET,POST,PUT,DELETE', // Allowed methods
-  credentials: true, // Include credentials (cookies)
-}));
+
+// app.use(cors({
+//   origin: 'https://codebaseclient-git-rohit-abhilash-kumars-projects-289775f5.vercel.app', // Frontend URL
+//   methods: 'GET,POST,PUT,DELETE', // Allowed methods
+//   credentials: true, // Include credentials (cookies)
+// }));
 
 
 
