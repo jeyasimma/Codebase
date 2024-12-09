@@ -29,26 +29,26 @@ app.use(cookieParser());
 //     credentials: true,
 // };
 
-// const corsOptions = {
-//     origin: "https://codebaseclient.vercel.app",
-//     credentials: true,
-// };
-// app.use(cors(corsOptions));
+const corsOptions = {
+    origin: "https://codebaseclient.vercel.app",
+    credentials: true,
+};
+app.use(cors(corsOptions));
 
 
 // Configure CORS
-const allowedOrigins = ['https://codebaseclient.vercel.app'];
-app.use(
-    cors({
-        origin: (origin, callback) => {
-            if (!origin || allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error('Not allowed by CORS'));
-            }
-        },
-    })
-);
+// const allowedOrigins = ['https://codebaseclient.vercel.app'];
+// app.use(
+//     cors({
+//         origin: (origin, callback) => {
+//             if (!origin || allowedOrigins.includes(origin)) {
+//                 callback(null, true);
+//             } else {
+//                 callback(new Error('Not allowed by CORS'));
+//             }
+//         },
+//     })
+// );
 
 
 app.use('/auth', AuthRoutes);
