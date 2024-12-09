@@ -29,7 +29,7 @@ app.use(cookieParser());
 //     credentials: true,
 // };
 const corsOptions = {
-    origin: "https://codebaseclient.vercel.app/",
+    origin: "https://codebaseclient.vercel.app",
     credentials: true,
 };
 app.use(cors(corsOptions));
