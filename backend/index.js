@@ -24,8 +24,12 @@ app.use(express.static('public'));
 app.use(cookieParser());
 
 // Corrected typo here: `corsOptions`
+// const corsOptions = {
+//     origin: true,
+//     credentials: true,
+// };
 const corsOptions = {
-    origin: true,
+    origin: "https://codebaseclient.vercel.app/",
     credentials: true,
 };
 app.use(cors(corsOptions));
