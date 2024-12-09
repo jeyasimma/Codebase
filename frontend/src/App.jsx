@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import User from "./pages/user";
-import UserLayout from "./Layout/UserLayout";
+import UserLayout from "./layout/UserLayout";
 // import Admin from "./pages/Admin/Admin";
 // import Adminlayout from "./Layout/Adminlayout";
 // import AddPost from "./pages/Admin/AddPost";
@@ -17,7 +17,7 @@ import { Provider } from "react-redux";
 import { peristor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Toaster } from "react-hot-toast";
-import Profile from "./pages/Profile";
+import Profile from "./pages/profile";
 import Filter from "./pages/filter";
 export default function App() {
   return (
