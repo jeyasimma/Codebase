@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import User from "./pages/user";
-import UserLayout from "./Layout/UserLayout";
+import UserLayout from "./layout/UserLayout";
 // import Admin from "./pages/Admin/Admin";
 // import Adminlayout from "./Layout/Adminlayout";
 // import AddPost from "./pages/Admin/AddPost";
