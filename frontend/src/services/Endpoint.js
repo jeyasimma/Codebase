@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const BaseUrl = 'http://localhost:5000'; // Ensure this is correct
+// export const BaseUrl = 'http://localhost:5000'; // Ensure this is correct
+export const BaseUrl = 'https://codebaseserver.vercel.app/'; // Ensure this is correct
 const instance = axios.create({
     baseURL: BaseUrl,
     withCredentials: true // Include credentials for cross-origin requests
