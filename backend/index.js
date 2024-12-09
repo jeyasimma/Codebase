@@ -32,12 +32,12 @@ app.use(cookieParser());
 // };
 // app.use(cors(corsOptions));
 
-const corsOptions = {
-    origin: "https://codebaseclient.vercel.app",
-    methods: 'GET,POST,PUT,DELETE',
-    credentials: true,
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//     origin: "https://codebaseclient.vercel.app",
+//     methods: 'GET,POST,PUT,DELETE',
+//     credentials: true,
+// };
+// app.use(cors(corsOptions));
 
 // const corsOptions = {
 //     origin: "https://codebaseclient-git-rohit-abhilash-kumars-projects-289775f5.vercel.app",
@@ -55,19 +55,20 @@ app.use(cors(corsOptions));
 
 
 
-// Configure CORS
-// const allowedOrigins = ['https://codebaseclient.vercel.app'];
-// app.use(
-//     cors({
-//         origin: (origin, callback) => {
-//             if (!origin || allowedOrigins.includes(origin)) {
-//                 callback(null, true);
-//             } else {
-//                 callback(new Error('Not allowed by CORS'));
-//             }
-//         },
-//     })
-// );
+const corsOptions = {
+    origin: (origin, callback) => {
+        const allowedOrigins = ['https://codebaseclient.vercel.app'];
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, origin);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true, // Allow cookies and authentication headers
+};
+app.use(cors(corsOptions));
+
 
 
 app.use('/auth', AuthRoutes);
