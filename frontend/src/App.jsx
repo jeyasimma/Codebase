@@ -17,7 +17,7 @@ import { Provider } from "react-redux";
 import { peristor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Toaster } from "react-hot-toast";
-import Profile from "./pages/Profile";
+import Profile from "./pages/profile";
 import Filter from "./pages/filter";
 export default function App() {
   return (
