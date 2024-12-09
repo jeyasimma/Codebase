@@ -29,8 +29,14 @@ app.use(cookieParser());
 //     credentials: true,
 // };
 
+// const corsOptions = {
+//     origin: "https://codebaseclient.vercel.app",
+//     credentials: true,
+// };
+// app.use(cors(corsOptions));
+
 const corsOptions = {
-    origin: "https://codebaseclient.vercel.app",
+    origin: "https://codebaseclient-git-rohit-abhilash-kumars-projects-289775f5.vercel.app",
     credentials: true,
 };
 app.use(cors(corsOptions));
