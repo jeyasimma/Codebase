@@ -1,4 +1,4 @@
-import UserModal from "../models/user.js";
+import UserModal from "../models/User.js";
 
 export const filterUsers = async (req, res) => {
   try {

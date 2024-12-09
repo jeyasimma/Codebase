@@ -1,4 +1,4 @@
-import UserModal from "../models/user.js"
+import UserModal from "../models/User.js"
 
 
 const GetSingleuser = async (req, res) => {

@@ -1,7 +1,7 @@
 import express from 'express'
 import { isAdmin } from '../middleware/checkAdmin.js'
 // import { Dashboard, Delete, GetUsers } from '../controllers/Dashboard.js'
-import { Delete, GetUsers } from '../controllers/Dashboard.js'
+import { Delete, GetUsers } from '../controllers/DashBoard.js'
 
 const DashboardRoutes = express.Router()
 

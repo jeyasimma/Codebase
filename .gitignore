@@ -6,3 +6,5 @@
 
 # Ignore profile images in backend directory
 **/backend/public/images/
+
+
