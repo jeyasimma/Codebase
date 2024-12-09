@@ -1,6 +1,6 @@
 // import Blgomodel from "../models/Blog.js"
 // import CommentModel from "../models/Commments.js"
-import UserModal from "../models/user.js"
+import UserModal from "../models/User.js"
 import fs from 'fs';
 import path from 'path';
 

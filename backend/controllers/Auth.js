@@ -2,7 +2,7 @@ import fs from 'fs';
 import jwt from 'jsonwebtoken'
 
 import { FileUploadeToColoudinary } from '../libs/Cloudinary.js';
-import UserModal from '../models/user.js'
+import UserModal from '../models/User.js'
 import bcrypt from 'bcrypt'
 // var bcrypt = require('../node_modules/bcrypt/bcrypt.js');
 

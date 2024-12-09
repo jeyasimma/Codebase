@@ -4,7 +4,7 @@ import DBCon from './libs/db.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import AuthRoutes from './routes/Auth.js';
-// import UserRoutes from './routes/user.js';  // Uncomment if needed
+// import UserRoutes from './routes/User.js';  // Uncomment if needed
 import DashboardRoutes from './routes/DashBoard.js';
 // import CommentRoutes from './routes/Comments.js';  // Uncomment if needed
 import PublicRoutes from './routes/public.js';
