@@ -24,31 +24,50 @@ app.use(express.static('public'));
 app.use(cookieParser());
 
 // Corrected typo here: `corsOptions`
+
+
 // const corsOptions = {
 //     origin: true,
 //     credentials: true,
 // };
+// app.use(cors(corsOptions));
+
+const corsOptions = {
+    origin: "https://codebaseclient.vercel.app",
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true,
+};
+app.use(cors(corsOptions));
 
 // const corsOptions = {
-//     origin: "https://codebaseclient.vercel.app",
+//     origin: "https://codebaseclient-git-rohit-abhilash-kumars-projects-289775f5.vercel.app",
 //     credentials: true,
 // };
 // app.use(cors(corsOptions));
 
 
+
+// app.use(cors({
+//   origin: 'https://codebaseclient-git-rohit-abhilash-kumars-projects-289775f5.vercel.app', // Frontend URL
+//   methods: 'GET,POST,PUT,DELETE', // Allowed methods
+//   credentials: true, // Include credentials (cookies)
+// }));
+
+
+
 // Configure CORS
-const allowedOrigins = ['https://codebaseclient.vercel.app'];
-app.use(
-    cors({
-        origin: (origin, callback) => {
-            if (!origin || allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error('Not allowed by CORS'));
-            }
-        },
-    })
-);
+// const allowedOrigins = ['https://codebaseclient.vercel.app'];
+// app.use(
+//     cors({
+//         origin: (origin, callback) => {
+//             if (!origin || allowedOrigins.includes(origin)) {
+//                 callback(null, true);
+//             } else {
+//                 callback(new Error('Not allowed by CORS'));
+//             }
+//         },
+//     })
+// );
 
 
 app.use('/auth', AuthRoutes);
