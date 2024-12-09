@@ -18,25 +18,25 @@ const app = express();
 
 
 
-app.use(cors());
+// app.use(cors());
 
-// const allowedOrigins = ['http://localhost:5173', 'https://codebaseclient.vercel.app'];
+const allowedOrigins = ['http://localhost:5173', 'https://codebaseclient.vercel.app'];
 
-// const corsOptions = {
-//     origin: (origin, callback) => {
-//         if (allowedOrigins.includes(origin) || !origin) {
-//             callback(null, origin);
-//         } else {
-//             callback(new Error('Not allowed by CORS'));
-//         }
-//     },
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     credentials: true,
-//     allowedHeaders: ['Content-Type', 'Authorization'],
-// };
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, origin);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
-// app.use(cors(corsOptions)); // Apply CORS globally before any other middleware
-// app.options('*', cors(corsOptions)); // Handle preflight requests
+app.use(cors(corsOptions)); // Apply CORS globally before any other middleware
+app.options('*', cors(corsOptions)); // Handle preflight requests
 
 
 
