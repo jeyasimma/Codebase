@@ -75,7 +75,7 @@ export default function Register() {
       navigate("/login");
     } catch (error) {
       console.error("Registration error:", error);
-      toast.error("Failed to register. Please try again.");
+      toast.error("Account already Exist with this Email. Failed to register. Please try again.");
     }
   };
 
