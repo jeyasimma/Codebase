@@ -14,6 +14,24 @@ dotenv.config();
 
 const PORT = process.env.PORT || 4000;
 const app = express();
+
+const allowedOrigins = ['http://localhost:5173', 'https://codebaseclient.vercel.app'];
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, origin);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
+app.use(cors(corsOptions)); // Apply CORS globally before any other middleware
+app.options('*', cors(corsOptions)); // Handle preflight requests
+
+
 DBCon();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,11 +42,11 @@ app.use(express.static('public'));
 app.use(cookieParser());
 
 // Corrected typo here: `corsOptions`
-const corsOptions = {
-    origin: true,
-    credentials: true,
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//     origin: true,
+//     credentials: true,
+// };
+// app.use(cors(corsOptions));
 
 app.use('/auth', AuthRoutes);
 // app.use('/user', UserRoutes);  // Uncomment if needed
