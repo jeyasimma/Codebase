@@ -2,17 +2,22 @@ import fs from 'fs';
 import jwt from 'jsonwebtoken'
 
 import { FileUploadeToColoudinary } from '../libs/Cloudinary.js';
-import UserModal from '../models/user.js'
+import UserModal from '../models/User.js'
 import bcrypt from 'bcrypt'
 // var bcrypt = require('../node_modules/bcrypt/bcrypt.js');
 
 const Register = async (req, res) => {
-    // console.log('BYyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
-    console.log('req',req);
+    // console.log('BYyyyyyyyyyyyyyyyyyyy/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
+    // console.log('req body',req.body);    
     try {
         const { FullName, email, password, gender, dept, skills, year, status, resume_link, phone, whatsapp} = req.body
         // Upload the image to Cloudinary
-        const imagePath = req.file.filename;
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file uploaded' , body:req.body});
+        }
+        // const filename = req.file.filename;
+        let imagePath = 'https://images.unsplash.com/photo-1623984109227-443f400446f0?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+        if(req.file) imagePath = req.file.filename;
         console.log('req',req);
         // const cloudinaryResult = await FileUploadeToColoudinary(imagePath, 'user_profiles');
         console.log(imagePath)
@@ -74,8 +79,9 @@ const Login = async (req, res) => {
         const token = jwt.sign({ userId: FindUser._id }, process.env.JWT_SECRET);
         res.cookie('token', token, {
             httpOnly: true,
-            secure: false,
-            maxAge: 3 * 24 * 60 * 60 * 1000 // 3 days in milliseconds
+            secure: true,
+            maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days in milliseconds
+            sameSite:'None'
         });
 
         return res.status(200).json({ success: true, message: "Login successfully", user: FindUser, token });

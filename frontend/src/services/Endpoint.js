@@ -1,10 +1,21 @@
 import axios from 'axios';
 
 export const BaseUrl = 'http://localhost:5000'; // Ensure this is correct
+// export const BaseUrl = 'https://codebaseserver.vercel.app'; // Ensure this is correct
+// export const BaseUrl = 'https://codebaseserver-7jmulmbtb-abhilash-kumars-projects-289775f5.vercel.app'; // Ensure this is correct
+// export const BaseUrl = 'https://codebaseserver-git-rohit-abhilash-kumars-projects-289775f5.vercel.app'; // Ensure this is correct
+
 const instance = axios.create({
     baseURL: BaseUrl,
-    withCredentials: true // Include credentials for cross-origin requests
+    withCredentials: true, // Include credentials for cross-origin requests
+    // headers: {
+    //     'Content-Type': 'application/json',
+    // },
 });
+
+
+
+
 
 // Helper methods
 export const get = (url, params) => instance.get(url, { params });

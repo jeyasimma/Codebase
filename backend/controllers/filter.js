@@ -9,6 +9,7 @@ export const filterUsers = async (req, res) => {
     if (dept) query.dept = dept;
     if (status) query.status = status;
 
+    // console.log("helooooooooooooooo",query);
     let users = await UserModal.find(query);
     // console.log("ajsvdddddddddddddddddjsd".users);
 
