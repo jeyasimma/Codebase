@@ -37,7 +37,7 @@
 6. **Create a Pull Request**
     Go to the original repository on GitHub, click on the "Pull Request" tab, and submit your pull request. Include a detailed description of the changes you made and` why they should be merged.
 
-    While making a PR, follow Pull_request_template.md to get your pull request accepted.
+    While making a PR, follow `Pull_request_template.md` to get your pull request accepted.
 
 7. **Reporting Issues**
     If you find a bug or want to suggest a feature:
