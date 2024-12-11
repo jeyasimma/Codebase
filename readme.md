@@ -129,3 +129,7 @@ Here’s a list of key API routes available in the **frontend**:
 
 Please visit `CONTRIBUTING.md` and follow the contribution guidlines.
 
+## License
+
+This repository is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
+
