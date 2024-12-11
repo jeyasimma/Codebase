@@ -113,6 +113,7 @@ Here’s a list of key API endpoints available in the backend:
 | GET    | `/dashboard/users`        | Get list of all registered users  |
 | DELETE | `/dashboard/delete/:id`   | Get specific user profile         |
 | GET    | `/public/Singleuser/:id`  | Get specific user profile         |
+| GET    | `/user/filter`            | Get Filtered Users                |
 
 Here’s a list of key API routes available in the **frontend**:
 
@@ -122,6 +123,7 @@ Here’s a list of key API routes available in the **frontend**:
 | GET    | `/user/:userId`        | Single user Profile                  |
 | GET    | `/login`               | Log in a user                        |
 | GET    | `/register`            | Register a new user                  |
+| GET    | `/filter`              | Get filtered users                   |
 
 
 
@@ -170,4 +172,4 @@ We welcome contributions! Follow these steps to contribute to this project.
     - Open a New Issue: 
     If your issue is unique, open a new issue and describe it in detail. Include steps to reproduce, if applicable, and suggested improvements.
 
-Thank you for contributing to Freelance Connect! Happy Coding!
+Thank you for contributing to Codebase! Happy Coding!
