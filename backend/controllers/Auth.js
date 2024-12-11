@@ -12,7 +12,8 @@ const Register = async (req, res) => {
     try {
         const { FullName, email, password, gender, dept, skills, year, status, resume_link, phone, whatsapp} = req.body
         // Upload the image to Cloudinary
-        const imagePath = req.file.filename;
+        let imagePath = 'https://images.unsplash.com/photo-1623984109227-443f400446f0?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+        if(req.file) imagePath = req.file.filename;
         console.log('req',req);
         // const cloudinaryResult = await FileUploadeToColoudinary(imagePath, 'user_profiles');
         console.log(imagePath)
