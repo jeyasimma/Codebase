@@ -7,11 +7,15 @@ import bcrypt from 'bcrypt'
 // var bcrypt = require('../node_modules/bcrypt/bcrypt.js');
 
 const Register = async (req, res) => {
-    // console.log('BYyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
-    console.log('req',req);
+    // console.log('BYyyyyyyyyyyyyyyyyyyy/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
+    // console.log('req body',req.body);    
     try {
         const { FullName, email, password, gender, dept, skills, year, status, resume_link, phone, whatsapp} = req.body
         // Upload the image to Cloudinary
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file uploaded' , body:req.body});
+        }
+        // const filename = req.file.filename;
         const imagePath = req.file.filename;
         console.log('req',req);
         // const cloudinaryResult = await FileUploadeToColoudinary(imagePath, 'user_profiles');
