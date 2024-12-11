@@ -20,7 +20,7 @@ Please describe the changes you have made in this pull request. Include any rele
 
 ## Type of Change
 
-Please select the appropriate option:
+Please select the appropriate option by putting x (example- [x]):
 
 - [ ] Bug fix
 - [ ] New feature
