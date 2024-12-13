@@ -33,6 +33,7 @@
 
     ```bash
     git add <file_name>
+    git status
     git commit -m "Add YourFeatureName"
     ```
 6. **Sync your forked repository with the original repository**
@@ -46,21 +47,29 @@
    git pull origin main
    ```
    Resolve the merge conflicts locally if any.
+
+8. **Commit again if there was any merge conflict**
+
+   ```bash
+    git add <file_name>
+    git status
+    git commit -m "Describe about the changes"
+    ```
    
-8. **Push your changes**
+9. **Push your changes**
     
    Now push your changes to the remote repository.
    ```
    git push origin feature/YourFeatureName
    ```
 
-9. **Create a Pull Request**
+10. **Create a Pull Request**
     
     Go to the original repository on GitHub, click on the "Pull Request" tab, and submit your pull request. Include a detailed description of the changes you made and` why they should be merged.
 
     While making a PR, follow [Pull_request_template.md](Pull_request_template.md) to get your pull request accepted.
 
-10. **Reporting Issues**
+11. **Reporting Issues**
     
     If you find a bug or want to suggest a feature:
 
