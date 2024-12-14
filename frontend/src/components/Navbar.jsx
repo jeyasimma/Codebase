@@ -105,7 +105,10 @@ export default function Navbar() {
   return (
     <nav className="navbar d-flex justify-content-between align-items-center p-3">
       <Link to={"/"}>
-        <h1 className="mx-5 text-white fs-2 fw-bold">CodeBase</h1>
+	  <button class="btn btn-primary mx-2">
+	  Home
+	  </button>
+
       </Link>
 
       <div className="d-flex align-items-center">
