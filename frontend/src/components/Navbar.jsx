@@ -104,6 +104,7 @@ export default function Navbar() {
 
   return (
     <nav className="navbar d-flex justify-content-between align-items-center p-3">
+
       <Link to={"/"}>
         <h1 className="mx-5 text-white fs-2 fw-bold">CodeBase</h1>
       </Link>
@@ -178,7 +179,11 @@ export default function Navbar() {
             Apply Filters
           </button>
         </div>
-
+        <Link to={"/"}>
+          <button class="btn btn-primary mx-2">
+            Home
+          </button>
+        </Link>
         {!user ? (
           <Link to={"/login"}>
             <button className="btn_sign mx-3">Login</button>
