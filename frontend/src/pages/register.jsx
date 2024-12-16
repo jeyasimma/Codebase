@@ -20,6 +20,7 @@ export default function Register() {
     whatsapp: "",
   });
   const [profile, setProfile] = useState(null);
+  const [phoneError, setPhoneError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,37 +28,41 @@ export default function Register() {
       ...prevData,
       [name]: value,
     }));
+
+    // Clear phone number error when input changes
+    if (name === "phone" || name === "whatsapp") {
+      setPhoneError("");
+    }
   };
 
   const handleFileChange = (e) => {
     setProfile(e.target.files[0]);
   };
 
-  // const handleTechStackChange = (e) => {
-  //   const selectedOptions = Array.from(e.target.selectedOptions).map(
-  //     (option) => option.value.trim().toLowerCase() // Convert selected options to array of strings
-  //   );
-
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     skills: selectedOptions, // Update the skills array
-  //   }));
-  // };
-
-
   const handleTechStackChange = (e) => {
     const value = e.target.value.toLowerCase();
     setFormData((prevData) => ({
       ...prevData,
       skills: prevData.skills.includes(value)
-        ? prevData.skills.filter((skill) => skill !== value) // remove if already selected
-        : [...prevData.skills, value], // add if not selected
+        ? prevData.skills.filter((skill) => skill !== value)
+        : [...prevData.skills, value],
     }));
   };
 
+  const validatePhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^\d{10}$/; // Regex to validate 10-digit phone number
+    return phoneRegex.test(phoneNumber);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate phone number before submitting
+    if (!validatePhoneNumber(formData.phone)) {
+      setPhoneError("Phone number must be exactly 10 digits.");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match!");
       return;
@@ -75,7 +80,7 @@ export default function Register() {
       navigate("/login");
     } catch (error) {
       console.error("Registration error:", error);
-      toast.error("Account already Exist with this Email. Failed to register. Please try again.");
+      toast.error("Account already exists with this email. Failed to register. Please try again.");
     }
   };
 
@@ -175,16 +180,6 @@ export default function Register() {
                   <option value="Angular">Angular</option>
                   <option value="Keras">Keras</option>
                   <option value="Pytorch">Pytorch</option>
-                  {/* <option value="UI/UX">UI/UX</option>
-                  <option value="Machine Learning">Machine Learning</option>
-                  <option value="Full-Stack Web Development">
-                    Full-Stack Web Development
-                  </option>
-                  <option value="App Development">App Development</option>
-                  <option value="Game Development">Game Development</option>
-                  <option value="Spring Boot">Spring Boot</option>
-                  <option value="Django">Django</option>
-                  <option value="Cloud Computing">Cloud Computing</option> */}
                 </select>
               </div>
 
@@ -253,6 +248,7 @@ export default function Register() {
                   onChange={handleChange}
                   required
                 />
+                {phoneError && <div className="text-danger">{phoneError}</div>}
               </div>
 
               <div className="mb-3">
@@ -334,20 +330,20 @@ export default function Register() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Profile Photo</label>
+                <label className="form-label">Profile Picture</label>
                 <input
                   type="file"
                   className="form-control"
                   name="profile"
                   onChange={handleFileChange}
-                  accept="image/*"
-                  required
                 />
               </div>
 
-              <button type="submit" className="btn btn-primary w-100 mt-4">
-                Register
-              </button>
+              <div className="d-grid gap-2">
+                <button type="submit" className="btn btn-primary">
+                  Register
+                </button>
+              </div>
             </form>
           </div>
         </div>
