@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BaseUrl, get } from "../services/Endpoint";
+import { useNavigate } from "react-router-dom"; // 1. Imports Updated
 
 export default function User() {
   const { userId } = useParams();
   const [singleUser, setSingleUser] = useState(null);
+  const navigate = useNavigate(); // 2. Navigation Hook
 
   useEffect(() => {
     const fetchSingleUser = async () => {
@@ -20,6 +22,10 @@ export default function User() {
     fetchSingleUser();
   }, [userId]);
 
+  const handleEdit = () => {
+    navigate("/"); // Redirects to the root route
+  }; // 3. Edit Button and Handler
+
   return (
     <div className="container text-white mt-5 mb-5">
       {singleUser ? (
@@ -34,6 +40,15 @@ export default function User() {
             />
             <h2 className="text-white">{singleUser.FullName}</h2>
             <p className="text-muted">{singleUser.role.toUpperCase()}</p>
+
+            {/* Edit Button */}
+            <button
+              onClick={handleEdit}
+              className="btn btn-primary mt-3"
+              style={{ padding: "10px 20px" }}
+            >
+              Edit
+            </button>
           </div>
 
           {/* Detailed User Information */}
@@ -108,3 +123,4 @@ export default function User() {
     </div>
   );
 }
+
